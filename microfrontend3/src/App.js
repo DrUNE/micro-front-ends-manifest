@@ -1,16 +1,22 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
 export class App extends Component {
-    state = {
-        hello: 'React 0.14 Web Component'
-    };
+  state = {
+    hello: 'React 0.14 Web Component',
+    count: 0
+  }
+  handleClick = () => {
+    this.setState(({count}) => ({count: count + 1}))
+  }
 
-    render() {
-        return (
-            <div>
-                <h3>Title: {this.props.title}</h3>
-                <p>Greeting: {this.state.hello}</p>
-            </div>
-        )
-    }
+  render () {
+    return (
+      <div>
+        <h3>Title: {this.props.title}</h3>
+        <p>Greeting: {this.state.hello}</p>
+        <span>{this.state.count}</span>
+        <button onClick={this.handleClick}></button>
+      </div>
+    )
+  }
 }
