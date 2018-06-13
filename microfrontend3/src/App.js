@@ -1,12 +1,25 @@
 import React, { Component } from 'react'
 
+function emit (eventName, data) {
+  window.eev ? eev.emit(eventName, data) : console.log(eventName, data)
+}
+
+function updateCount ({count}) {
+  return ({count: count + 1})
+}
+
+function emitCountUpdatedEvent (args) {
+  emit('micro3-state-changed', args)
+}
+
 export class App extends Component {
   state = {
     hello: 'React 0.14 Web Component',
     count: 0
   }
+
   handleClick = () => {
-    this.setState(({count}) => ({count: count + 1}))
+    this.setState(updateCount, () => emitCountUpdatedEvent(this.state))
   }
 
   render () {
@@ -14,8 +27,8 @@ export class App extends Component {
       <div>
         <h3>Title: {this.props.title}</h3>
         <p>Greeting: {this.state.hello}</p>
-        <span>{this.state.count}</span>
-        <button onClick={this.handleClick}></button>
+        <p>{this.state.count}</p>
+        <button onClick={this.handleClick}>+</button>
       </div>
     )
   }
