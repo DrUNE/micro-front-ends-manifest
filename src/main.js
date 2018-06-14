@@ -3,6 +3,7 @@ import { Eev } from './eev'
 import axios from 'axios'
 
 const handleError = error => console.error(error)
+
 const handleSucess = (directory, {data: manifest}) => {
   console.log('Manifest configuration loaded:', manifest)
 
@@ -18,13 +19,16 @@ const handleSucess = (directory, {data: manifest}) => {
   document.head.appendChild(style)
   document.body.appendChild(script)
 }
+
 const loadManifest = name => {
   axios.get(`${name}/manifest.json`)
     .then(handleSucess.bind(this, name))
     .catch(handleError)
 }
 
-window.eev = new Eev()
+if (!window.eev) {
+  window.eev = new Eev()
+}
 
 loadManifest('microfrontend1')
 loadManifest('microfrontend2')
